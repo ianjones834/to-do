@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>To Do</title>
+
+  <style>
+    span {
+      cursor: default;
+      font-size: 1.5em;
+    }
+
+    span:hover {
+      color: red;
+    }
+
+    input {
+      font-size: 1.5em;
+    }
+  </style>
+
+  <script>
+
+
+    function getList() {
+      return JSON.parse(localStorage.getItem("list"));
+    }
+
+    function init() {
+      if (getList() == null) {
+        localStorage.setItem("list", JSON.stringify([]));
+      }
+
+      const input = document.getElementById("input");
+
+      input.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+          document.getElementById("add").click();
+        }
+      });
+
+      displayList();
+    }
+
+    function addToList() {
+      const localList = getList();
+      console.log(localList);
+
+      const input = document.getElementById("input");
+      localList.push(input.value)
+
+      const list = document.getElementById("list");
+      list.innerHTML = `<li id="${localList.length - 1}"><span onclick="removeFromList(${localList.length - 1})">${input.value}</span></li>` + list.innerHTML;
+
+      localStorage.setItem("list", JSON.stringify(localList));
+    }
+
+    function displayList() {
+      const localList = getList();
+      const list = document.getElementById("list");
+
+      for (i in localList) {
+        list.innerHTML = `<li id='${i}'><span onclick="removeFromList(${i})">${localList[i]}</span></li>
+        ` + list.innerHTML;
+      }
+    }
+
+    function removeFromList(i) {
+      const localList = getList();
+
+      localList.splice(i, 1);
+
+      const listItem = document.getElementById(`${i}`);
+      listItem.remove();
+
+      localStorage.setItem("list", JSON.stringify(localList));
+
+      document.getElementById("list").innerHTML = "";
+      displayList();
+    }
+  </script>
+</head>
+
+<body onload="init()">
+  <input id="input" type="text" />
+  <input id="add" type="submit" value="Add" onclick="addToList()" />
+
+  <ul id="list">
+  </ul>
+</body>
+
+</html>
