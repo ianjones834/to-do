@@ -36,13 +36,8 @@ function addTaskToList(i) {
 
   let inputString = input.value;
 
-  while (inputString.includes("<")) {
-    inputString = inputString.replace("<", "&lt;");
-  }
-
-  while (inputString.includes(">")) {
-    inputString = inputString.replace(">", "&gt;");
-  }
+  inputString = inputString.replaceAll("<", "&lt;");
+  inputString = inputString.replaceAll(">", "&gt;");
 
   const taskList = document.getElementById(`list-${i}`);
   taskList.innerHTML = generateTask(i, lists[i].length, inputString) + taskList.innerHTML;
