@@ -54,6 +54,8 @@
       list.innerHTML = `<li id="${localList.length - 1}"><span onclick="removeFromList(${localList.length - 1})">${input.value}</span></li>` + list.innerHTML;
 
       localStorage.setItem("list", JSON.stringify(localList));
+
+      input.value = "";
     }
 
     function displayList() {
@@ -84,7 +86,7 @@
 
 <body onload="init()">
   <input id="input" type="text" />
-  <input id="add" type="submit" value="Add" onclick="addToList()" />
+  <input id="add" type="hidden" value="Add" onclick="addToList()" />
 
   <ul id="list">
   </ul>
