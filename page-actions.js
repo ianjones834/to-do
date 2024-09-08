@@ -52,7 +52,7 @@ function addList() {
 }
 
 function generateList(i, listName) {
-  return `<input id="clear-${i}" type="submit" value="Clear List" onclick="clearList(${i})"/>
+  return `<input id="clear-${i}" type="submit" value="Delete List" onclick="deleteList(${i})"/>
   <nobr>${listName}:</nobr>
   <input id="input-${i}" type="text" onkeydown="checkEnter(${i})"/><ul id="list-${i}"></ul>`
 

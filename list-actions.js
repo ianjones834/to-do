@@ -50,7 +50,7 @@ function addTaskToList(i) {
   input.value = "";
 }
 
-function clearList(i) {
+function deleteList(i) {
   if (confirm("Are you sure?")) {
     const lists = getLists();
     const names = getNames();
