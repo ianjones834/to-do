@@ -79,6 +79,14 @@
       document.getElementById("list").innerHTML = "";
       displayList();
     }
+
+    function clearList() {
+      if (confirm("Are you sure?")) {
+        localStorage.removeItem("list");
+        location.reload();
+      }
+    }
+
   </script>
 </head>
 
@@ -86,6 +94,8 @@
   <input id="input" type="text" onkeydown="enter()"/>
 
   <ul id="list"></ul>
+
+  <input type="submit" onclick="clearList()" value="Clear List" />
 </body>
 
 </html>
