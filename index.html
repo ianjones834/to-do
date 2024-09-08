@@ -6,16 +6,17 @@
   <title>To Do</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link rel="stylesheet" href="index.css" />
-  <script src="list.js"></script>
+  <script src="page-actions.js"></script>
+  <script src="list-actions.js"></script>
+  <script src="task-actions.js"></script>
 
 </head>
 
-<body onload="init()">
-  <input id="input" type="text" onkeydown="checkEnter()"/>
+<body onload="initializePage()">
+  <div id="body">
+  </div>
 
-  <ul id="list"></ul>
-
-  <input type="submit" onclick="clearList()" value="Clear List" />
+  <input id="add-list" type="submit" value="Create New List" />
 </body>
 
 </html>
