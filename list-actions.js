@@ -4,10 +4,11 @@ function generateTask(i, t, input) {
 
 function initializeList(i) {
   const lists = getLists();
+  const names = getNames();
 
   const body = document.getElementById("body");
 
-  body.innerHTML += generateList(i);
+  body.innerHTML += generateList(i, names[i]);
 
   const taskList = lists[i];
 
@@ -51,10 +52,14 @@ function addTaskToList(i) {
 
 function clearList(i) {
   if (confirm("Are you sure?")) {
-    console.log(i);
     const lists = getLists();
+    const names = getNames();
+
     lists.splice(i, 1);
+    names.splice(i, 1);
+
     localStorage.setItem("lists", JSON.stringify(lists));
+    localStorage.setItem("names", JSON.stringify(names));
 
     location.reload();
   }
