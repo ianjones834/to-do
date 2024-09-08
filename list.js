@@ -2,6 +2,7 @@ function getList() {
   return JSON.parse(localStorage.getItem("list"));
 }
 
+
 function init() {
   if (getList() == null) {
     localStorage.setItem("list", JSON.stringify([]));
