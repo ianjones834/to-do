@@ -32,12 +32,19 @@ function addList() {
   const lists = getLists();
   const names = getNames();
 
-  const listName = prompt("Name your List");
-  names.push(listName);
+  const listName = prompt("Name your List or Leave Blank for no Name: ");
+  console.log(!listName);
+
+  if (!listName) {
+    names.push("");
+  }
+  else {
+    names.push(listName);
+  }
 
 
   const body = document.getElementById("body");
-  body.innerHTML += generateList(lists.length, listName);
+  body.innerHTML += generateList(lists.length, names[names.length - 1]);
 
   lists.push([]);
   localStorage.setItem("lists", JSON.stringify(lists));
