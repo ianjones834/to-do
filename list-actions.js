@@ -28,16 +28,26 @@ function addTaskToList(i) {
 
   const input = document.getElementById(`input-${i}`);
 
+
+
   if (input.value === "") {
     return;
   }
 
+  let inputString = input.value;
+
+  while (inputString.includes("<")) {
+    inputString = inputString.replace("<", "&lt;");
+  }
+
+  while (inputString.includes(">")) {
+    inputString = inputString.replace(">", "&gt;");
+  }
+
   const taskList = document.getElementById(`list-${i}`);
-  taskList.innerHTML = generateTask(i, lists[i].length, input.value) + taskList.innerHTML;
+  taskList.innerHTML = generateTask(i, lists[i].length, inputString) + taskList.innerHTML;
 
-  const task = document.getElementById(`task-${i}-${lists[i].length}`)
-
-  lists[i].push(input.value)
+  lists[i].push(inputString)
 
   localStorage.setItem("lists", JSON.stringify(lists));
 
