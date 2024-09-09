@@ -1,4 +1,12 @@
-function generateTask(listName, t, input) {
+function generateTask(listName, t, input, date) {
+  if (date !== null && date !== "") {
+    date = date.substring(5);
+    date = date.replaceAll("0","");
+    date = date.replaceAll("-","/");
+
+    return `<li id="task-${listName}-${t}" onclick="removeTaskFromList('${listName}', ${t})">${input} (${date})</li>`
+  }
+
   return `<li id="task-${listName}-${t}" onclick="removeTaskFromList('${listName}', ${t})">${input} </li>`
 }
 
@@ -9,11 +17,18 @@ function initializeList(listName) {
 
   const taskList = getList(listName);
 
+  taskList.sort((a, b) => a.date.localeCompare(b.date));
+
+
   for (t in taskList) {
     const unorderedList = document.getElementById(`tasks-${listName}`)
-    unorderedList.innerHTML += generateTask(listName, t, taskList[t]);
+    unorderedList.innerHTML += generateTask(listName, t, taskList[t].task, taskList[t].date);
   }
+
+
+  save();
 }
+
 function checkEnter(listName) {
   if (event.key === "Enter") {
     addTaskToList(listName);
@@ -23,6 +38,7 @@ function checkEnter(listName) {
 function addTaskToList(listName) {
   const list = getList(listName);
   const input = document.getElementById(`input-${listName}`);
+  const date = document.getElementById(`date-${listName}`);
 
   if (input.value === "") {
     return;
@@ -33,14 +49,13 @@ function addTaskToList(listName) {
   inputString = inputString.replaceAll("<", "&lt;");
   inputString = inputString.replaceAll(">", "&gt;");
 
-  const taskList = document.getElementById(`tasks-${listName}`);
-  taskList.innerHTML += generateTask(listName, list.length, inputString);
-
-  list.push(inputString)
+  list.push({task: inputString, date: document.getElementById(`date-${listName}`).value});
   lists[listName] = list;
   input.value = "";
+  date.value ="";
 
   save();
+  location.reload();
 }
 
 function deleteList(listName) {

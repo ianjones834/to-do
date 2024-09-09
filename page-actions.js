@@ -69,10 +69,15 @@ function generateList(listName) {
   <nobr>${listName}:</nobr></span>
    <ul id="tasks-${listName}"></ul>
   <input
+    id="date-${listName}"
+    type="date"
+  />
+  <input
     id="input-${listName}"
     type="text"
     onkeydown="checkEnter('${listName}')"
-  /></div>`;
+  />
+  </div>`;
 }
 
 function save() {
