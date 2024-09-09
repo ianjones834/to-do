@@ -5,5 +5,4 @@ function removeTaskFromList(listName, t) {
   document.getElementById(`task-${listName}-${t}`).remove();
 
   localStorage.setItem(listName, JSON.stringify(list));
-  location.reload();
 }

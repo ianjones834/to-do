@@ -10,7 +10,6 @@ function initializeList(listName) {
   const taskList = getList(listName);
 
   for (t in taskList) {
-    console.log(taskList[t]);
     const unorderedList = document.getElementById(`tasks-${listName}`)
     unorderedList.innerHTML = generateTask(listName, t, taskList[t]) + unorderedList.innerHTML;
   }
