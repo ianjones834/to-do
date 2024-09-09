@@ -39,6 +39,8 @@ function addTaskToList(listName) {
   list.push(inputString)
   lists[listName] = list;
   input.value = "";
+
+  save();
 }
 
 function deleteList(listName) {
@@ -53,4 +55,6 @@ function deleteList(listName) {
     document.getElementById(`list-${listName}`).remove();
   }
   image.src = "icons/delete.png";
+
+  save();
 }

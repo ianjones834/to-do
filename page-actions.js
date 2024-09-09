@@ -55,6 +55,8 @@ function addList() {
   body.innerHTML += generateList(listName);
   names.push(listName);
   lists[listName] = [];
+
+  save();
 }
 
 function generateList(listName) {
@@ -71,4 +73,9 @@ function generateList(listName) {
     type="text"
     onkeydown="checkEnter('${listName}')"
   /></div>`;
+}
+
+function save() {
+  localStorage.setItem("names", JSON.stringify(names));
+  localStorage.setItem("lists", JSON.stringify(lists));
 }
