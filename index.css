@@ -29,3 +29,9 @@ img:active {
   transform: scale(.9);
 
 }
+
+svg {
+  width: 2em;
+  height: 1.4em;
+  position: relative;
+}

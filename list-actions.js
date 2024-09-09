@@ -1,7 +1,3 @@
-function generateTask(listName, t, input) {
-  return `<li id="task-${listName}-${t}" onclick="removeTaskFromList('${listName}', ${t})">${input} </li>`
-}
-
 function initializeList(listName) {
   const body = document.getElementById("body");
 
