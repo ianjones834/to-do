@@ -1,32 +1,42 @@
+if (getNames() == null) {
+  localStorage.setItem("names", JSON.stringify([]));
+}
+
+if (getLists() == null) {
+  localStorage.setItem("lists", JSON.stringify({}));
+}
+
+const names = getNames();
+const lists = getLists();
+
+document.getElementById("add-list").addEventListener("click", addList);
+
+window.onbeforeunload = function () {
+  localStorage.setItem("names", JSON.stringify(names));
+  localStorage.setItem("lists", JSON.stringify(lists));
+}
+
+initializeLists();
+
+function getLists() {
+  return JSON.parse(localStorage.getItem("lists"));
+}
+
 function getList(listName) {
-  return JSON.parse(localStorage.getItem(listName));
+  return lists[listName];
 }
 
 function getNames() {
   return JSON.parse(localStorage.getItem("names"));
 }
 
-function initializePage() {
-  if (getNames() == null) {
-    localStorage.setItem("names", JSON.stringify([]));
-  }
-
-  document.getElementById("add-list").addEventListener("click", addList);
-
-  initializeLists();
-}
-
 function initializeLists() {
-  const names = getNames();
-
   for (listName of names) {
     initializeList(listName);
   }
 }
 
 function addList() {
-  const names = getNames();
-
   let listName = prompt("Name your List: ");
 
   while (true) {
@@ -44,9 +54,7 @@ function addList() {
   const body = document.getElementById("body");
   body.innerHTML += generateList(listName);
   names.push(listName);
-
-  localStorage.setItem(listName, JSON.stringify([]));
-  localStorage.setItem("names", JSON.stringify(names));
+  lists[listName] = [];
 }
 
 function generateList(listName) {
@@ -56,11 +64,11 @@ function generateList(listName) {
     src="icons/delete.png"
     onclick="deleteList('${listName}')"
   />
-  <nobr>${listName}:</nobr>
+  <nobr>${listName}:</nobr></span>
+   <ul id="tasks-${listName}"></ul>
   <input
     id="input-${listName}"
     type="text"
     onkeydown="checkEnter('${listName}')"
-  /></span>
-  <ul id="tasks-${listName}"></ul></div>`
+  /></div>`;
 }

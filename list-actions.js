@@ -11,7 +11,7 @@ function initializeList(listName) {
 
   for (t in taskList) {
     const unorderedList = document.getElementById(`tasks-${listName}`)
-    unorderedList.innerHTML = generateTask(listName, t, taskList[t]) + unorderedList.innerHTML;
+    unorderedList.innerHTML += generateTask(listName, t, taskList[t]);
   }
 }
 function checkEnter(listName) {
@@ -34,10 +34,10 @@ function addTaskToList(listName) {
   inputString = inputString.replaceAll(">", "&gt;");
 
   const taskList = document.getElementById(`tasks-${listName}`);
-  taskList.innerHTML = generateTask(listName, list.length, inputString) + taskList.innerHTML;
+  taskList.innerHTML += generateTask(listName, list.length, inputString);
 
   list.push(inputString)
-  localStorage.setItem(listName, JSON.stringify(list));
+  lists[listName] = list;
   input.value = "";
 }
 
@@ -46,14 +46,10 @@ function deleteList(listName) {
   image.src = "icons/delete-red.png";
 
   if (confirm("Are you sure?")) {
-    const names = getNames();
-
     const i = names.findIndex(x => x === listName);
     names.splice(i, 1);
 
-    localStorage.removeItem(listName);
-    localStorage.setItem("names", JSON.stringify(names));
-
+    delete lists[listName];
     document.getElementById(`list-${listName}`).remove();
   }
   image.src = "icons/delete.png";
