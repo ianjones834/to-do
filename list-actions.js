@@ -1,35 +1,29 @@
-function generateTask(i, t, input) {
-  return `<li id="task-${i}-${t}" onclick="removeTaskFromList(${i}, ${t})">${input} </li>`
+function generateTask(listName, t, input) {
+  return `<li id="task-${listName}-${t}" onclick="removeTaskFromList('${listName}', ${t})">${input} </li>`
 }
 
-function initializeList(i) {
-  const lists = getLists();
-  const names = getNames();
-
+function initializeList(listName) {
   const body = document.getElementById("body");
 
-  body.innerHTML += generateList(i, names[i]);
+  body.innerHTML += generateList(listName);
 
-  const taskList = lists[i];
+  const taskList = getList(listName);
 
   for (t in taskList) {
-    const unorderedList = document.getElementById(`list-${i}`)
-    unorderedList.innerHTML = generateTask(i, t, taskList[t]) + unorderedList.innerHTML;
+    console.log(taskList[t]);
+    const unorderedList = document.getElementById(`tasks-${listName}`)
+    unorderedList.innerHTML = generateTask(listName, t, taskList[t]) + unorderedList.innerHTML;
   }
 }
-
-function checkEnter(i) {
+function checkEnter(listName) {
   if (event.key === "Enter") {
-    addTaskToList(i);
+    addTaskToList(listName);
   }
 }
 
-function addTaskToList(i) {
-  const lists = getLists();
-
-  const input = document.getElementById(`input-${i}`);
-
-
+function addTaskToList(listName) {
+  const list = getList(listName);
+  const input = document.getElementById(`input-${listName}`);
 
   if (input.value === "") {
     return;
@@ -40,27 +34,28 @@ function addTaskToList(i) {
   inputString = inputString.replaceAll("<", "&lt;");
   inputString = inputString.replaceAll(">", "&gt;");
 
-  const taskList = document.getElementById(`list-${i}`);
-  taskList.innerHTML = generateTask(i, lists[i].length, inputString) + taskList.innerHTML;
+  const taskList = document.getElementById(`tasks-${listName}`);
+  taskList.innerHTML = generateTask(listName, list.length, inputString) + taskList.innerHTML;
 
-  lists[i].push(inputString)
-
-  localStorage.setItem("lists", JSON.stringify(lists));
-
+  list.push(inputString)
+  localStorage.setItem(listName, JSON.stringify(list));
   input.value = "";
 }
 
-function deleteList(i) {
+function deleteList(listName) {
+  const image = document.getElementById(`clear-${listName}`);
+  image.src = "icons/delete-red.png";
+
   if (confirm("Are you sure?")) {
-    const lists = getLists();
     const names = getNames();
 
-    lists.splice(i, 1);
+    const i = names.findIndex(x => x === listName);
     names.splice(i, 1);
 
-    localStorage.setItem("lists", JSON.stringify(lists));
+    localStorage.removeItem(listName);
     localStorage.setItem("names", JSON.stringify(names));
 
-    location.reload();
+    document.getElementById(`list-${listName}`).remove();
   }
+  image.src = "icons/delete.png";
 }

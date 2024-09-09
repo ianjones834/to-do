@@ -1,10 +1,9 @@
-function removeTaskFromList(i, t) {
-  const lists = getLists();
-  lists[i].splice(t, 1);
+function removeTaskFromList(listName, t) {
+  const list = getList(listName);
+  list.splice(t, 1);
 
-  document.getElementById(`task-${i}-${t}`).remove();
+  document.getElementById(`task-${listName}-${t}`).remove();
 
-  localStorage.setItem("lists", JSON.stringify(lists));
-
+  localStorage.setItem(listName, JSON.stringify(list));
   location.reload();
 }

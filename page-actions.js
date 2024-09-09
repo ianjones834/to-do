@@ -1,5 +1,5 @@
-function getLists() {
-  return JSON.parse(localStorage.getItem("lists"));
+function getList(listName) {
+  return JSON.parse(localStorage.getItem(listName));
 }
 
 function getNames() {
@@ -7,10 +7,6 @@ function getNames() {
 }
 
 function initializePage() {
-  if (getLists() == null) {
-    localStorage.setItem("lists", JSON.stringify([]));
-  }
-
   if (getNames() == null) {
     localStorage.setItem("names", JSON.stringify([]));
   }
@@ -21,39 +17,50 @@ function initializePage() {
 }
 
 function initializeLists() {
-  const lists = getLists();
+  const names = getNames();
 
-  for (i in lists) {
-    initializeList(i);
+  for (listName of names) {
+    initializeList(listName);
   }
 }
 
 function addList() {
-  const lists = getLists();
   const names = getNames();
 
-  const listName = prompt("Name your List or Leave Blank for no Name: ");
-  console.log(!listName);
+  let listName = prompt("Name your List: ");
 
-  if (!listName) {
-    names.push("");
+  while (true) {
+    if (!listName) {
+      return;
+    }
+    else if (names.includes(listName)) {
+      listName = prompt("List name already exists. Please choose a different name: ");
+    }
+    else {
+      break;
+    }
   }
-  else {
-    names.push(listName);
-  }
-
 
   const body = document.getElementById("body");
-  body.innerHTML += generateList(lists.length, names[names.length - 1]);
+  body.innerHTML += generateList(listName);
+  names.push(listName);
 
-  lists.push([]);
-  localStorage.setItem("lists", JSON.stringify(lists));
+  localStorage.setItem(listName, JSON.stringify([]));
   localStorage.setItem("names", JSON.stringify(names));
 }
 
-function generateList(i, listName) {
-  return `<input id="clear-${i}" type="submit" value="Delete List" onclick="deleteList(${i})"/>
+function generateList(listName) {
+  return `<div id="list-${listName}"><span style="">
+  <img
+    id="clear-${listName}"
+    src="icons/delete.png"
+    onclick="deleteList('${listName}')"
+  />
   <nobr>${listName}:</nobr>
-  <input id="input-${i}" type="text" onkeydown="checkEnter(${i})"/><ul id="list-${i}"></ul>`
-
+  <input
+    id="input-${listName}"
+    type="text"
+    onkeydown="checkEnter('${listName}')"
+  /></span>
+  <ul id="tasks-${listName}"></ul></div>`
 }
