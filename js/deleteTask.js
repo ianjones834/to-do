@@ -1,0 +1,2 @@
+function deleteTask(list, num) {
+}

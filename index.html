@@ -7,27 +7,47 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/7d5a1b1b0d.js" crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="./global.css">
+
     <script src="./js/addNewTaskToList.js"></script>
     <script src="./js/createNewList.js"></script>
+    <script src="./js/deleteTask.js"></script>
+    <script src="./js/displayNewListPopUp.js"></script>
+    <script src="./js/init.js"></script>
   </head>
   <body>
+    <!-- New List Overlay -->
+    <div id="newlistoverlay" class="overlay">
+      <div class="card customcard">
+        <div class="card-header fw-bold">
+          Enter New List Name
+        </div>
+        <div class="card-body">
+          <input type="text" />
+        </div>
+      </div>
+    </div>
+
     <div class="h1 text-center">To Do Lists:</div>
     <div id="main">
       <div id="listspace" class="row m-5">
         <div class="col-md-4 text-center align-bottom">
-          <span id="newlistbutton" class="btn btn-primary">
+          <span id="newlist" class="btn btn-primary">
             Create New List
           </span>
         </div>
       </div>
     </div>
+
   </body>
 
   <script>
     $(document).ready(() => {
-      $('#newlistbutton').click(() => {
+      const lists = init();
+
+      $('#newlist').click(() => {
         createNewList();
-      })
+      });
     })
   </script>
 </html>
